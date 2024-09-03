@@ -77,7 +77,7 @@ export function RegisterModal({
         <ModalBody>
           <Alert status="info">
             <AlertIcon />
-            To signup on Dash Scholar, you need a google scholar account, and
+            To signup on Pivx Scholar, you need a google scholar account, and
             need to verify ownership of that account.
           </Alert>
           <FormControl mt={4}>
@@ -215,7 +215,7 @@ export const UserContextProvider = ({ children }: { children: any }) => {
   const register = async (scholarUrl: string) => {
     if (ether == null || api == null) return;
     const signature = await ether.signMessage(
-      "Click sign below to authenticate with Dash Scholar :)"
+      "Click sign below to authenticate with Pivx Scholar :)"
     );
 
     if (signature == null) return;
@@ -232,7 +232,7 @@ export const UserContextProvider = ({ children }: { children: any }) => {
     if (ether == null || api == null) return;
 
     const signature = await ether.signMessage(
-      "Click sign below to authenticate with Dash Scholar :)"
+      "Click sign below to authenticate with Pivx Scholar :)"
     );
 
     if (signature == null) return;

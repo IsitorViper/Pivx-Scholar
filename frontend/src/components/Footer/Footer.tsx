@@ -34,7 +34,7 @@ export const Footer = () => {
             <img width="72" height="72" src={logo} alt="logo" />
             <Text color="muted">A Decentralized</Text>
             <Text>Academic Publishing System</Text>
-            <Text>Using The Dash Platform
+            <Text>Using The Pivx Platform
 </Text>
           </Stack>
           <Stack
@@ -76,7 +76,7 @@ export const Footer = () => {
           align="center"
         >
           <Text fontSize="sm" color={isDarkMode?"white":"subtle"}>
-            &copy; {new Date().getFullYear()} Dash Scholar Inc. All rights
+            &copy; {new Date().getFullYear()} Pivx Scholar Inc. All rights
             reserved.
           </Text>
           <ButtonGroup variant="ghost">

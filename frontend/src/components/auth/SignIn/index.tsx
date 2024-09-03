@@ -108,7 +108,7 @@ const SignInPage: React.FC<LoginModalProps> = ({ isOpen, setIsOpen }) => {
     if (ether == null) return;
 
     const signature = await ether.signMessage(
-      "Click sign below to authenticate with Dash Scholar :)"
+      "Click sign below to authenticate with Pivx Scholar :)"
     );
 
     if (signature == null) return;

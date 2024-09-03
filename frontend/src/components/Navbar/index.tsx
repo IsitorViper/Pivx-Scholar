@@ -71,7 +71,7 @@ export default function Navbar() {
           <img src={logo} alt="logo" width={40} />
           <Heading fontSize="2xl" fontWeight="bold" ml={2}>
             <Link to="/" className={isDarkMode ? "text-white" : ""}>
-            Dash Scholar
+            Pivx Scholar
             </Link>
           </Heading>
         </Flex>

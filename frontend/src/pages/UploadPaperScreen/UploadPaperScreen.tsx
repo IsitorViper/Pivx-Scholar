@@ -296,7 +296,7 @@ export default function UploadPaperScreen() {
                   <ListItem>Upload your paper.</ListItem>
                   <ListItem>Fill the abstract of the paper.</ListItem>
                   <ListItem>
-                    Wait for the dash scholar process to complete.
+                    Wait for the pivx scholar process to complete.
                   </ListItem>
                 </OrderedList>
               </Flex>
@@ -397,7 +397,7 @@ export default function UploadPaperScreen() {
               <ListItem>Upload your paper.</ListItem>
               <ListItem>Fill the abstract of the paper.</ListItem>
               <ListItem>
-                Wait for the dash scholar process to complete.
+                Wait for the pivx scholar process to complete.
               </ListItem>
             </OrderedList>
           </Flex>

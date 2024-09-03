@@ -73,7 +73,7 @@ export default function SignUpLoginInScreen() {
                 size="4xl"
                 className={`${isDarkMode && "text-gray-100"}`}
               >
-                Dash Scholar
+                Pivx Scholar
               </Heading>
             </Flex>
             <Box fontSize="lg" my={6}>
@@ -104,7 +104,7 @@ export default function SignUpLoginInScreen() {
               width={350}
               onClick={() => user.signInOrRegister()}
             >
-              Login with Dash
+              Login with Pivx
             </Button>
           </Flex>
           <Flex>
@@ -122,7 +122,7 @@ export default function SignUpLoginInScreen() {
             <FeatureCard
               image={transparent}
               title="Transparent"
-              content="We offer a transparent dash scholar process. Your work is visible to all and reviewed by trusted academics"
+              content="We offer a transparent pivx scholar process. Your work is visible to all and reviewed by trusted academics"
             />
             <FeatureCard
               image={anonymous}

@@ -105,7 +105,7 @@ const SignUp: React.FC<SignUpProps> = ({ isOpen, setIsOpen }) => {
   const handleSubmit = async () => {
     try {
       const signature = await ether?.signMessage(
-        "Click sign below to authenticate with Dash Scholar :)"
+        "Click sign below to authenticate with Pivx Scholar :)"
       );
 
       if (signature == null) return;
@@ -232,7 +232,7 @@ const SignUp: React.FC<SignUpProps> = ({ isOpen, setIsOpen }) => {
                 isDarkMode ? "text-gray-200" : "text-gray-700"
               }`}
             >
-              Your Dash Address is
+              Your Pivx Address is
             </h2>
             <p className="text-blue-500 font-medium">"{address}"</p>
           </div>

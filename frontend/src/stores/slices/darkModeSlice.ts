@@ -5,7 +5,7 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-  isDarkMode: true,
+  isDarkMode: false,
 };
 
 const darkModeSlice = createSlice({

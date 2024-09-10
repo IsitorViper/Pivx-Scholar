@@ -8,6 +8,8 @@ interface ModalProps {
   onRequestClose?: () => void;
   children?: any;
   modalTop?: boolean;
+  shouldCloseOnEsc?:boolean;
+  shouldCloseOnOverlayClick?:boolean;
 }
 
 // const customStyles = {
@@ -32,8 +34,11 @@ const ModalBox: React.FC<ModalProps> = ({
   onRequestClose,
   children,
   modalTop,
+  shouldCloseOnEsc=true,
+  shouldCloseOnOverlayClick=true,
 }) => {
     const customStyles = {
+        close:{ display: "none" },
         content: {
           top: modalTop?"30%":"50%",
           left: "50%",
@@ -55,6 +60,8 @@ const ModalBox: React.FC<ModalProps> = ({
       onRequestClose={onRequestClose}
       style={customStyles}
       portalClassName={"bg-red-700"}
+      shouldCloseOnEsc={shouldCloseOnEsc}
+      shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
     >
       {children}
     </Modal>

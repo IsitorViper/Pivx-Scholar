@@ -103,7 +103,10 @@ export default function UploadPaperScreen() {
   const reviewFile = async () => {
     console.log(file.current);
     if(user.isDemo && file.current && title && category){
-      setReviewFileScreen(true);
+      setTimeout(() => setAbstractScreen(true), 500);
+      if (abstract) {
+        setReviewFileScreen(true);
+      }
     }else if (file.current && title && category) {
       if (ether == null) return;
 

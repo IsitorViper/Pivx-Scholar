@@ -5,7 +5,10 @@ import SignUp from "../SignUp";
 import { EtherContext } from "../../../contexts/ether";
 import axios from "axios";
 import { RootState } from "../../../stores";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { UserContext } from "../../../contexts/user";
+import { setUser } from "../../../stores/slices/userSlice";
+import { useNavigate } from "react-router-dom";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -19,7 +22,8 @@ const SignInPage: React.FC<LoginModalProps> = ({ isOpen, setIsOpen }) => {
   const [value, setValue] = useState("");
   const [load, setLoad] = useState(false);
   const [expired, setExpired] = useState("false");
-
+  
+  const user = useContext(UserContext);
   const [isRegisterModalOpen, setIsRegisterModalOpen] =
     useState<boolean>(false);
 
@@ -104,18 +108,34 @@ const SignInPage: React.FC<LoginModalProps> = ({ isOpen, setIsOpen }) => {
 
   const ether = useContext(EtherContext).ether;
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleSubmitDemoLogin = () =>{
+    dispatch(setUser({
+        name: "John Doe",
+        email: "john.doe@example.com",
+        address: "123 Main St, Springfield, IL",
+        token: "abc123tokenXYZ",
+        designation: "Software Engineer",
+        scholarUrl: "https://scholar.google.com/citations?user=12345",
+        isDemo: true,
+      }));
+    setIsOpen(false);
+    setValue("");
+    navigate("/browse");
+  }
+
   const handleSubmitlogin = async () => {
     if (ether == null) return;
-
     const signature = await ether.signMessage(
       "Click sign below to authenticate with Pivx Scholar :)"
     );
-
+    
     if (signature == null) return;
-
+    
     const walletAddress = await ether?.connectWallet();
     if (walletAddress == null) return;
-
+    
     const response = await axios.post(`http://ec2-54-158-0-218.compute-1.amazonaws.com:3001/user/login`, {
       address: walletAddress,
       signature,
@@ -224,7 +244,7 @@ const SignInPage: React.FC<LoginModalProps> = ({ isOpen, setIsOpen }) => {
                 isFormValid() ? "" : "opacity-50 cursor-not-allowed"
               }`}
               disabled={!isFormValid()}
-              onClick={() => handleSubmitlogin()}
+              onClick={() => handleSubmitDemoLogin()} //Don't forgot the change here later
             >
               Log In
             </button>

@@ -4,8 +4,10 @@ import ReCAPTCHA from "react-google-recaptcha";
 import ModalBox from "../../ReactModal";
 import axios from "axios";
 import { EtherContext } from "../../../contexts/ether";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../stores";
+import { useNavigate } from "react-router-dom";
+import { setUser } from "../../../stores/slices/userSlice";
 
 interface SignUpProps {
   isOpen: boolean;
@@ -102,6 +104,23 @@ const SignUp: React.FC<SignUpProps> = ({ isOpen, setIsOpen }) => {
 
   const ether = useContext(EtherContext).ether;
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleSubmitDemoSignUp = () =>{
+    dispatch(setUser({
+        name: "John Doe",
+        email: "john.doe@example.com",
+        address: "123 Main St, Springfield, IL",
+        token: "abc123tokenXYZ",
+        designation: "Software Engineer",
+        scholarUrl: "https://scholar.google.com/citations?user=12345",
+        isDemo: true,
+      }));
+    setIsOpen(false);
+    setValue("");
+    navigate("/browse");
+  }
+
   const handleSubmit = async () => {
     try {
       const signature = await ether?.signMessage(
@@ -172,6 +191,8 @@ const SignUp: React.FC<SignUpProps> = ({ isOpen, setIsOpen }) => {
         isOpen={isMnemonicPharseModal}
         onRequestClose={closeMnemonicPharseModal}
         modalTop
+        shouldCloseOnOverlayClick={false}
+        shouldCloseOnEsc={false}
       >
         <div
           className={` px-6 py-8 shadow-lg rounded-md ${
@@ -205,6 +226,7 @@ const SignUp: React.FC<SignUpProps> = ({ isOpen, setIsOpen }) => {
               navigator.clipboard.writeText(mnemonic);
               setIsOpen(false);
               setIsMnemonicPharseModal(false);
+              handleSubmitDemoSignUp();
             }}
           >
             Copy
@@ -365,9 +387,7 @@ const SignUp: React.FC<SignUpProps> = ({ isOpen, setIsOpen }) => {
             // ${isFormValid() ? "" : "opacity-50 cursor-not-allowed"}
             disabled={!isFormValid()}
             onClick={() => {
-              handleSubmit();
               setIsMnemonicPharseModal(true);
-              //   setIsOpen(false);
             }}
           >
             Create Account

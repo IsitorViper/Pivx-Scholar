@@ -57,18 +57,6 @@ export default function Navbar() {
     dispatch(toggleDarkMode());
   };
 
-  const onClickDemoMode = () => {
-    dispatch(setUser({
-      name: "John Doe",
-      email: "john.doe@example.com",
-      address: "123 Main St, Springfield, IL",
-      token: "abc123tokenXYZ",
-      designation: "Software Engineer",
-      scholarUrl: "https://scholar.google.com/citations?user=12345",
-      isDemo: true,
-    }));
-  };
-
   return (
     <Container maxW="7xl" zIndex={100}>
       <SignUp isOpen={isLoginModalOpen} setIsOpen={setIsLoginModalOpen} />
@@ -143,15 +131,6 @@ export default function Navbar() {
                 className="ml-3"
               >
                 Create wallet
-              </Button>
-              <Button
-                onClick={onClickDemoMode}
-                bg="#6459F5"
-                color="#ffffff"
-                variant="solid"
-                className="ml-3"
-              >
-                Demo Mode
               </Button>
             </>
           ) : (

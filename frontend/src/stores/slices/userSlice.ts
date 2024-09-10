@@ -10,6 +10,7 @@ const userSlice = createReducer({
   address: null,
   designation: null,
   scholarUrl: null,
+  isDemo: false
 },
   {
     [setUser.toString()]: (state, action) => {
@@ -19,6 +20,7 @@ const userSlice = createReducer({
       state.address = action.payload.address;
       state.designation = action.payload.designation;
       state.scholarUrl = action.payload.scholarUrl;
+      state.isDemo= action.payload.isDemo ?? false;
     }
   });
 

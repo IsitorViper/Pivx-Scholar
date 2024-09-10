@@ -12,6 +12,7 @@ import { ApiPaper } from '../../contexts/api/Api';
 import { UserContext } from '../../contexts/user';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content';
+import { dummyApiPapers, dummyPDFUrl } from '../BrowseScreen/BrowseScreen.demo';
 
 
 
@@ -19,7 +20,7 @@ import withReactContent from 'sweetalert2-react-content';
 export default function ReviewPaper() {
     const api = useContext(ApiContext).api;
     const ether = useContext(EtherContext).ether;
-    const user = useContext(UserContext).address;
+    const user = useContext(UserContext);
 
     const [reviewer, setReviewer] = useState(false);
     const [commentScreen, showCommentScreen] = useState(false);
@@ -50,7 +51,7 @@ export default function ReviewPaper() {
         if (apiPaper) {
             setPaper(paper.data.paper);
 
-            if (user === paper.data.paper.user) {
+            if (user.address === paper.data.paper.user) {
                 setNotReviewer(true);
                 setReviewer(false);
             } else {
@@ -83,10 +84,13 @@ export default function ReviewPaper() {
     }
 
     useEffect(() => {
-        if (address && api && ether && user) {
+        if(user.isDemo){
+            setPaper(dummyApiPapers[0]);
+            setReviewer(true);
+        }else if (address && api && ether && user.address) {
             getPaper(address);
         }
-    }, [address, api, ether, user]);
+    }, [address, api, ether, user.address]);
 
     if (commentScreen) {
         return (
@@ -109,7 +113,7 @@ export default function ReviewPaper() {
                                     <Text fontSize='s'>Anonymous</Text>
                                 </Box>
                             </Flex>
-                            <a href={paper?.ipfsHash} download>
+                            <a href={user.isDemo ? dummyPDFUrl : paper?.ipfsHash} download>
                                 <Button color='#6459F5' variant='outline' borderColor='#6459F5' w="20vw">
                                     <DownloadIcon mr="0.5rem" />
                                     Download Paper
@@ -130,9 +134,7 @@ export default function ReviewPaper() {
                             </Flex>
 
                         </Flex>
-
-                        <PaperView width="55vw" file={paper?.ipfsHash} heightPercentage={0.8} setPages={(pages) => setPages(pages)} />
-
+                        <PaperView width="55vw" file={user.isDemo ? dummyPDFUrl : paper?.ipfsHash} heightPercentage={0.8} setPages={(pages) => setPages(pages)} />
                     </Flex>
                 </Container>
 

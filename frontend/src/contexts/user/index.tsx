@@ -40,6 +40,7 @@ export type UserContextProps = {
   username: string;
   designation: string;
   scholarUrl: string;
+  isDemo: boolean;
 };
 
 export function RegisterModal({
@@ -138,6 +139,7 @@ export const UserContext = createContext<UserContextProps>({
   address: "",
   designation: "",
   scholarUrl: "",
+  isDemo: false,
 });
 
 export const UserContextProvider = ({ children }: { children: any }) => {
@@ -261,6 +263,7 @@ export const UserContextProvider = ({ children }: { children: any }) => {
         token: user.token || "",
         designation: user.designation || "",
         scholarUrl: user.scholarUrl || "",
+        isDemo: user.isDemo || false,
       }}
     >
       <RegisterModal isOpen={isOpen} onClose={() => setIsOpen(false)} />

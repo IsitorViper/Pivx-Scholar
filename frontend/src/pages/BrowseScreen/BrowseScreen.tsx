@@ -26,11 +26,13 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { RootState } from "../../stores";
 import { useSelector } from "react-redux";
+import { UserContext } from "../../contexts/user";
+import { dummyApiPapers, dummyPDFUrl } from "./BrowseScreen.demo";
 
 export default function BrowseScreen() {
   const api = useContext(ApiContext).api;
   const ether = useContext(EtherContext).ether;
-
+  const user=useContext(UserContext);
   const [papers, setPapers] = useState<ApiPaper[]>([]);
   const [filteredPapers, setFilteredPapers] = useState<ApiPaper[]>([]);
   const [showFilteredPapers, setShowFilteredPapers] = useState<boolean>(false);
@@ -44,6 +46,12 @@ export default function BrowseScreen() {
       );
     }
   };
+
+  useEffect(()=>{
+    if(user.isDemo){
+      setPapers(dummyApiPapers)
+    }
+  },[user.isDemo])
 
   const filteredPapersView = () => {
     return (
@@ -72,7 +80,7 @@ export default function BrowseScreen() {
                     title={paper.title}
                     status={paper.status}
                     abstract={paper.abstract}
-                    ipfsHash={paper.ipfsHash}
+                    ipfsHash={user.isDemo?dummyPDFUrl:paper.ipfsHash}
                     heightPercentage={0.2}
                     category={paper.category}
                   />
@@ -192,7 +200,7 @@ export default function BrowseScreen() {
                           title={paper.title}
                           status={paper.status}
                           abstract={paper.abstract}
-                          ipfsHash={paper.ipfsHash}
+                          ipfsHash={user.isDemo?dummyPDFUrl:paper.ipfsHash}
                           heightPercentage={0.2}
                           category={paper.category}
                         />
@@ -233,7 +241,7 @@ export default function BrowseScreen() {
                       title={paper.title}
                       status={paper.status}
                       abstract={paper.abstract}
-                      ipfsHash={paper.ipfsHash}
+                      ipfsHash={user.isDemo?dummyPDFUrl:paper.ipfsHash}
                       heightPercentage={0.2}
                       category={paper.category}
                     />

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -56,6 +56,19 @@ export default function Navbar() {
     setIsDarkMode((prevMode) => !prevMode);
     dispatch(toggleDarkMode());
   };
+
+  const onClickDemoMode = () => {
+    dispatch(setUser({
+      name: "John Doe",
+      email: "john.doe@example.com",
+      address: "123 Main St, Springfield, IL",
+      token: "abc123tokenXYZ",
+      designation: "Software Engineer",
+      scholarUrl: "https://scholar.google.com/citations?user=12345",
+      isDemo: true,
+    }));
+  };
+
   return (
     <Container maxW="7xl" zIndex={100}>
       <SignUp isOpen={isLoginModalOpen} setIsOpen={setIsLoginModalOpen} />
@@ -71,7 +84,7 @@ export default function Navbar() {
           <img src={logo} alt="logo" width={40} />
           <Heading fontSize="2xl" fontWeight="bold" ml={2}>
             <Link to="/" className={isDarkMode ? "text-white" : ""}>
-            Pivx Scholar
+              Pivx Scholar
             </Link>
           </Heading>
         </Flex>
@@ -96,41 +109,52 @@ export default function Navbar() {
           >
             Signout
           </Button> */}
-          <div>
-            <div className="flex items-center mt-1">
-              <button
-                className={`${
-                  isDarkMode
-                    ? "bg-gray-800 border-gray-800"
-                    : "bg-gray-300 border-gray-200"
-                } w-14 h-8 rounded-full p-1 duration-300 ease-in-out relative border-2 focus:outline-none focus:ring-2 focus:ring-gray-500`}
-                onClick={_toggleDarkMode}
+          
+          {!user.username ? (
+            <>
+              <div>
+                <div className="flex items-center mt-1">
+                  <button
+                    className={`${
+                      isDarkMode
+                        ? "bg-gray-800 border-gray-800"
+                        : "bg-gray-300 border-gray-200"
+                    } w-14 h-8 rounded-full p-1 duration-300 ease-in-out relative border-2 focus:outline-none focus:ring-2 focus:ring-gray-500`}
+                    onClick={_toggleDarkMode}
+                  >
+                    <div
+                      className={`${
+                        isDarkMode ? "translate-x-4" : "-translate-x-4"
+                      } inline-block w-5 h-5 transform duration-300 ease-in-out bg-white rounded-full shadow-lg`}
+                    />
+                  </button>
+                  <span className="ml-2 text-gray-500 dark:text-gray-200">
+                    {isDarkMode ? "Dark Mode" : "Light Mode"}
+                  </span>
+                </div>
+              </div>
+              <Button
+                onClick={() => {
+                  setIsLoginModalOpen(true);
+                }}
+                bg="#6459F5"
+                color="#ffffff"
+                variant="solid"
+                className="ml-3"
               >
-                <div
-                  className={`${
-                    isDarkMode ? "translate-x-4" : "-translate-x-4"
-                  } inline-block w-5 h-5 transform duration-300 ease-in-out bg-white rounded-full shadow-lg`}
-                />
-              </button>
-              <span className="ml-2 text-gray-500 dark:text-gray-200">
-                {isDarkMode ? "Dark Mode" : "Light Mode"}
-              </span>
-            </div>
-          </div>
-
-          <Button
-            onClick={() => {
-              setIsLoginModalOpen(true);
-            }}
-            bg="#6459F5"
-            color="#ffffff"
-            variant="solid"
-            className="ml-3"
-          >
-            Create wallet
-          </Button>
-
-          {user.username && (
+                Create wallet
+              </Button>
+              <Button
+                onClick={onClickDemoMode}
+                bg="#6459F5"
+                color="#ffffff"
+                variant="solid"
+                className="ml-3"
+              >
+                Demo Mode
+              </Button>
+            </>
+          ) : (
             <Flex alignItems="center" gridGap={6}>
               <NavLink text="Home" href="/" />
               <NavLink text="Upload" href="/paper" />

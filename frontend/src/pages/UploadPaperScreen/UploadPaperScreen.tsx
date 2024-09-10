@@ -21,7 +21,7 @@ import {
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoIosPaper } from "react-icons/io";
 import { BsFilePersonFill } from "react-icons/bs";
 import { CloseIcon, CheckIcon } from "@chakra-ui/icons";
@@ -36,7 +36,7 @@ export default function UploadPaperScreen() {
   const [category, setCategory] = useState("");
   const [abstract, setAbstract] = useState("");
   const user = useContext(UserContext);
-  const [hash, setHash] = useState("");
+  const [hash, setHash] = useState("https://peer-review-chainlink.infura-ipfs.io/ipfs/");
   const [pages, setPages] = useState(0);
   const file = useRef(null);
   const [progress, setProgress] = useState(0);
@@ -89,7 +89,11 @@ export default function UploadPaperScreen() {
   };
 
   const retrieveFile = async (e: any) => {
-    if (ether == null || !e.target.files) return;
+    // Check if user is in demo mode or ether is null
+    if (!user.isDemo && ether == null) return;
+
+    // Ensure files are present in the event target
+    if (!e.target.files || e.target.files.length === 0) return;
 
     file.current = e.target.files[0];
     setProgress(0);
@@ -97,7 +101,10 @@ export default function UploadPaperScreen() {
   };
 
   const reviewFile = async () => {
-    if (file.current && title && category) {
+    console.log(file.current);
+    if(user.isDemo && file.current && title && category){
+      setReviewFileScreen(true);
+    }else if (file.current && title && category) {
       if (ether == null) return;
 
       if (!file.current) return;
@@ -123,6 +130,25 @@ export default function UploadPaperScreen() {
   };
 
   const uploadFile = async () => {
+    if(user.isDemo){
+      MySwal.fire({
+        icon: "success",
+        title: <p>Good Job!</p>,
+        html: (
+          <div>
+            Your paper has been uploaded successfully{" "}
+            <a style={{ color: "blue" }} href={hash}>
+              here
+            </a>
+          </div>
+        ),
+      }).then((val) => {
+        console.log(val);
+        if (val.isConfirmed) {
+          navigate("/browse");
+        }
+      });
+    }
     if (ether == null) return;
 
     const res = await ether.deployPaper(hash);
@@ -221,7 +247,7 @@ export default function UploadPaperScreen() {
                 bg="#d3455b"
                 color="#ffffff"
                 variant="solid"
-                onClick={uploadFile}
+                onClick={()=>setReviewFileScreen(false)}
               >
                 <CloseIcon w={3} h={3} mr={2} />
                 Cancel
